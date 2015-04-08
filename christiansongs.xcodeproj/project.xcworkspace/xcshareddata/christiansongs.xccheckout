@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AC634F3C-407B-4A8E-9953-F82122339888</string>
+	<key>IDESourceControlProjectName</key>
+	<string>christiansongs</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C38990DDD0AEC39730EF5F196B2370BEE0FCB224</key>
+		<string>https://github.com/davidpaul0880/ChristiansSongs.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>christiansongs.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C38990DDD0AEC39730EF5F196B2370BEE0FCB224</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/davidpaul0880/ChristiansSongs.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C38990DDD0AEC39730EF5F196B2370BEE0FCB224</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C38990DDD0AEC39730EF5F196B2370BEE0FCB224</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ChristiansSongs</string>
+		</dict>
+	</array>
+</dict>
+</plist>
