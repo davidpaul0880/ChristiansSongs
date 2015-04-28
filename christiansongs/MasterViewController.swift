@@ -85,15 +85,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     func reFetchData(searchText : String, Scope selectedScope : Int){
         
-        var tfield = titleField
-
-        let range1 = searchText.rangeOfCharacterFromSet(NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"))
-        if range1?.startIndex >= searchText.startIndex {
-            
-            
-            tfield = "title_en"
-        }
-        
         
         //("searchText =\(searchText)")
         
@@ -102,7 +93,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         
         //if selectedScope == 0 {
-        let predicate = NSPredicate(format: "(\(tfield) BEGINSWITH[c] %@)", argumentArray: [searchText])
+        let predicate = NSPredicate(format: "(title_en BEGINSWITH[cd] %@  or title_ml BEGINSWITH[cd] %@)", argumentArray: [searchText,searchText])
         fetchRequest.predicate = predicate
         
         /*}else{

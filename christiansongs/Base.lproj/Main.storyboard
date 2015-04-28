@@ -26,7 +26,7 @@
         <!--Detail-->
         <scene sceneID="yUG-lL-AsK">
             <objects>
-                <viewController title="Detail" id="JEX-9P-axG" customClass="DetailViewController" customModule="christiansongs" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Detail" id="JEX-9P-axG" customClass="DetailViewController" customModule="ag" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SYR-Wa-9uf"/>
                         <viewControllerLayoutGuide type="bottom" id="GAO-Cl-Wes"/>
@@ -80,7 +80,7 @@
         <!--Add Bookmark-->
         <scene sceneID="aTQ-Ec-1FG">
             <objects>
-                <tableViewController storyboardIdentifier="addeditcontroller" id="yfb-1K-Iys" customClass="BMAddTableViewController" customModule="christiansongs" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="addeditcontroller" id="yfb-1K-Iys" customClass="BMAddTableViewController" customModule="ag" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="WDE-Mw-TSw">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -158,12 +158,12 @@
         <!--Master-->
         <scene sceneID="smW-Zh-WAh">
             <objects>
-                <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="MasterViewController" customModule="christiansongs" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Master" clearsSelectionOnViewWillAppear="NO" id="7bK-jq-Zjz" customClass="MasterViewController" customModule="ag" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="r7i-6Z-zg0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" showsCancelButton="YES" id="xIS-6w-0V5">
+                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="Search" showsCancelButton="YES" id="xIS-6w-0V5">
                             <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
@@ -235,7 +235,7 @@
         <!--Web View Controller-->
         <scene sceneID="Hi0-I9-aM8">
             <objects>
-                <viewController id="hvD-ai-uB1" customClass="WebViewController" customModule="christiansongs" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hvD-ai-uB1" customClass="WebViewController" customModule="ag" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nWT-Jb-wlF"/>
                         <viewControllerLayoutGuide type="bottom" id="fCP-eY-vp1"/>
@@ -271,7 +271,7 @@
         <!--Bookmarks-->
         <scene sceneID="AFn-WU-1cM">
             <objects>
-                <tableViewController title="Bookmarks" id="T1Y-E8-zFR" customClass="BMTableViewController" customModule="christiansongs" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Bookmarks" id="T1Y-E8-zFR" customClass="BMTableViewController" customModule="ag" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fjo-fr-JvR">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -323,7 +323,7 @@
         <!--Select Folder-->
         <scene sceneID="Gbi-R9-SsD">
             <objects>
-                <tableViewController title="Select Folder" id="wo9-od-1SS" customClass="FolderSelectionTableViewController" customModule="christiansongs" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Select Folder" id="wo9-od-1SS" customClass="FolderSelectionTableViewController" customModule="ag" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="dzB-bN-uNr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
