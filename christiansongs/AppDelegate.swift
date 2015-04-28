@@ -12,30 +12,51 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-    
+    var rootsplitview: UISplitViewController?
    
+    func hideM(){
+        
+        self.rootsplitview?.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryHidden
+        
+    }
+    
+    func hideMaster() {
+        
+        UIView.animateWithDuration(0.2, delay: 0.2, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            
+            self.hideM()
+            
+            }, completion:{
+                
+                (Bool) in self.rootsplitview?.preferredDisplayMode = UISplitViewControllerDisplayMode.Automatic
+                return ()
+                
+        })
+        
+        
+    }
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         
-        let docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as String
-        println("docpath = \(docpath)")
+        //let docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as! String
+        //println("docpath = \(docpath)")
         
         
         
         
         
         // Override point for customization after application launch.
-        let splitViewController = self.window!.rootViewController as UISplitViewController
-        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as UINavigationController
+        let splitViewController = self.window!.rootViewController as! UISplitViewController
+        let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
         splitViewController.delegate = self
 
-        let masterNavigationController = splitViewController.viewControllers[0] as UINavigationController
-        let controller = masterNavigationController.topViewController as MasterViewController
+        let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
+        let controller = masterNavigationController.topViewController as! MasterViewController
         controller.managedObjectContext = self.managedObjectContext
         
-        
-        
+        self.rootsplitview = splitViewController
+        /*
         let urljs = self.applicationDocumentsDirectory.URLByAppendingPathComponent("script.js")
         
         //this part
@@ -54,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             
             NSFileManager.defaultManager().copyItemAtPath(defaultStorePath!, toPath:urlcss.path!, error: nil)
         }
-
+        */
         
         
         return true
@@ -103,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.jeesmon.apps.christiansongs" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as NSURL
+        return urls[urls.count-1] as! NSURL
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {

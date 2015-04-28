@@ -97,12 +97,13 @@ class FolderSelectionTableViewController: UITableViewController {
                 //Code for launching the camera goes here
                 
                 
-                let loginTextField = actionSheet.textFields![0] as UITextField
-                println("\(loginTextField.text)")
+                let loginTextField = actionSheet.textFields![0] as! UITextField
+                //("\(loginTextField.text)")
                 
-                let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 let managedObjectContext = appDelegate.managedObjectContextUserData!
                 var fldr = NSEntityDescription.insertNewObjectForEntityForName("Folder", inManagedObjectContext: managedObjectContext) as? Folder
+                fldr?.lastaccessed = NSDate()
                 fldr?.created_date = NSDate()
                 fldr?.folder_label = loginTextField.text
                 fldr?.orderfield = NSDate.timeIntervalSinceReferenceDate()
@@ -135,12 +136,12 @@ class FolderSelectionTableViewController: UITableViewController {
         
 
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("FolderCell", forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("FolderCell", forIndexPath: indexPath) as! UITableViewCell
             cell.textLabel?.text = arrayFolders[indexPath.row].folder_label
             cell.imageView?.image = UIImage(named: "folder.png")
             return cell
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("NewFolder", forIndexPath: indexPath) as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("NewFolder", forIndexPath: indexPath) as! UITableViewCell
             cell.textLabel?.text = "Add Folder"
             return cell
         }

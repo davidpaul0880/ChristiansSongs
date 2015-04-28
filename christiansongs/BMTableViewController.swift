@@ -15,13 +15,13 @@ class BMTableViewController: UITableViewController {
     var arrayBookmarks = [BookMarks]()
     var parentFolder : Folder?
     
-    var bookMarkArry = []
+    //var bookMarkArry = []
     
     func getAllBookMarks() {
         
         if parentFolder == nil {
             
-            let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let managedObjectContext = appDelegate.managedObjectContextUserData!
             
             let fetchRequest = NSFetchRequest()
@@ -46,35 +46,35 @@ class BMTableViewController: UITableViewController {
                 
                 for value in results {
                     
-                    let foldert : Folder = value as Folder
+                    let foldert : Folder = value as! Folder
                     if foldert.folder_label == "Bookmarks" {
                         let sett : NSSet = foldert.bookmarks
                         if sett.count > 0 {
                             
                             var allchilds : NSArray = sett.allObjects
                             let sortDescriptorchild = NSSortDescriptor(key: "orderfield", ascending: true)
-                            arrayBookmarks = allchilds.sortedArrayUsingDescriptors([sortDescriptorchild]) as [BookMarks]
+                            arrayBookmarks = allchilds.sortedArrayUsingDescriptors([sortDescriptorchild]) as! [BookMarks]
                             
                         }
                     }else{
                         arrayFolder.append(foldert)
                     }
-                    println("\(foldert.folder_label)")
+                    //("\(foldert.folder_label)")
                     
                     
                 }
                 
             }
             
-            bookMarkArry = [arrayBookmarks, arrayFolder]
+            //bookMarkArry = [arrayBookmarks, arrayFolder]
         }else{
             
             
             var allchilds : NSArray = parentFolder!.bookmarks.allObjects
             let sortDescriptorchild = NSSortDescriptor(key: "orderfield", ascending: true)
-            arrayBookmarks = allchilds.sortedArrayUsingDescriptors([sortDescriptorchild]) as [BookMarks]
+            arrayBookmarks = allchilds.sortedArrayUsingDescriptors([sortDescriptorchild]) as! [BookMarks]
             
-            bookMarkArry = [arrayBookmarks]
+            //bookMarkArry = [arrayBookmarks]
         }
         
 
@@ -82,7 +82,7 @@ class BMTableViewController: UITableViewController {
     }
     func cancelClicked() {
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedObjectContext = appDelegate.managedObjectContextUserData!
         managedObjectContext.rollback()
         //managedObjectContext.reset()
@@ -107,7 +107,7 @@ class BMTableViewController: UITableViewController {
         }else{
             
             
-            let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let managedObjectContext = appDelegate.managedObjectContextUserData!
             
             var error: NSError?
@@ -116,7 +116,7 @@ class BMTableViewController: UITableViewController {
             if let err = error {
                 println("\(error)")
             } else {
-                println("success")
+                //("success")
             }
             
             self.navigationItem.leftBarButtonItem = self.navigationItem.backBarButtonItem
@@ -136,7 +136,19 @@ class BMTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        if parentFolder != nil {
+            
+            self.navigationItem.title = parentFolder?.folder_label
+            
+            if !arrayBookmarks.isEmpty {
+                self.navigationItem.rightBarButtonItem = self.editButtonItem()
+            }
+            
+        }else{
+            self.navigationItem.rightBarButtonItem = self.editButtonItem()
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -149,11 +161,16 @@ class BMTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        if tableView.editing == true {
+        if tableView.editing == true && parentFolder == nil { //+20150528
             
-            return 1 + bookMarkArry.count
+            return 1 + 2
         }
-        return bookMarkArry.count
+        if parentFolder == nil  {
+            return 2
+        }else{
+            return 1
+        }
+        ///return bookMarkArry.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -175,7 +192,7 @@ class BMTableViewController: UITableViewController {
             
             if self.tableView.editing == false {
                 
-                let controller = self.navigationController?.viewControllers[0] as MasterViewController
+                let controller = self.navigationController?.viewControllers[0] as! MasterViewController
                 controller.selectedSongFromBM = BMDao().getSelectedSong(arrayBookmarks[indexPath.row].songs_id)
                 
                 controller.performSegueWithIdentifier("showDetail", sender: self)
@@ -184,10 +201,10 @@ class BMTableViewController: UITableViewController {
                 
                 var storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                 
-                var controler : BMAddTableViewController = storyboard.instantiateViewControllerWithIdentifier("addeditcontroller") as BMAddTableViewController
+                var controler : BMAddTableViewController = storyboard.instantiateViewControllerWithIdentifier("addeditcontroller") as! BMAddTableViewController
                 
                 controler.editingBookMark = arrayBookmarks[indexPath.row]
-                controler.folder = arrayBookmarks[indexPath.row].folder as Folder
+                controler.folder = arrayBookmarks[indexPath.row].folder as! Folder
                 //let navigationController = UINavigationController(rootViewController: vc)
                 
                 //self.presentViewController(navigationController, animated: true, completion: nil)
@@ -210,7 +227,7 @@ class BMTableViewController: UITableViewController {
             ident = "NewFolder"
         }
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(ident, forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ident, forIndexPath: indexPath) as! UITableViewCell
 
         if indexPath.section == 0 {
             
@@ -274,7 +291,7 @@ class BMTableViewController: UITableViewController {
             }
             if obj != nil {
                 
-                let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 let managedObjectContext = appDelegate.managedObjectContextUserData!
                 managedObjectContext.deleteObject(obj!)
             }
@@ -305,11 +322,12 @@ class BMTableViewController: UITableViewController {
                 //Code for launching the camera goes here
                 
                 
-                let loginTextField = actionSheet.textFields![0] as UITextField
+                let loginTextField = actionSheet.textFields![0] as! UITextField
                 
-                let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 let managedObjectContext = appDelegate.managedObjectContextUserData!
                 var fldr = NSEntityDescription.insertNewObjectForEntityForName("Folder", inManagedObjectContext: managedObjectContext) as? Folder
+                fldr?.lastaccessed = NSDate()
                 fldr?.created_date = NSDate()
                 fldr?.folder_label = loginTextField.text
                 fldr?.orderfield = NSDate.timeIntervalSinceReferenceDate()
@@ -539,7 +557,7 @@ class BMTableViewController: UITableViewController {
             
             if let indexPath = self.tableView.indexPathForSelectedRow() {
                 
-                let controller = segue.destinationViewController as BMTableViewController
+                let controller = segue.destinationViewController as! BMTableViewController
                 
                 controller.parentFolder = self.arrayFolder[indexPath.row]
             }

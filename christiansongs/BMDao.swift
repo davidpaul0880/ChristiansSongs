@@ -15,7 +15,7 @@ class BMDao {
     func getAllFolders() -> [Folder] {
         
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedObjectContext = appDelegate.managedObjectContextUserData!
         
         let fetchRequest1 = NSFetchRequest()
@@ -30,15 +30,15 @@ class BMDao {
         var error: NSError?
         
         var objects = managedObjectContext.executeFetchRequest(fetchRequest1,
-            error: &error) as [Folder]
+            error: &error) as! [Folder]
         
         return objects
     }
     
     func getSelectedSong(songId : String) -> Songs? {
         
-        println("songId = \(songId)")
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        //("songId = \(songId)")
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedObjectContext = appDelegate.managedObjectContext!
         
         let fetchRequest1 = NSFetchRequest()
@@ -52,14 +52,14 @@ class BMDao {
         var error: NSError?
         
         var objects = managedObjectContext.executeFetchRequest(fetchRequest1,
-            error: &error) as [Songs]
+            error: &error) as! [Songs]
         
         if objects.count > 0 {
             
-            println("got bm song")
+            //("got bm song")
             return objects[0]
         }else{
-            println("got no song \(error?.localizedDescription)")
+            //("got no song \(error?.localizedDescription)")
             return nil
         }
         
@@ -70,7 +70,7 @@ class BMDao {
         
         var fldr : Folder?
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedObjectContext = appDelegate.managedObjectContextUserData!
         
         let fetchRequest1 = NSFetchRequest()
@@ -78,19 +78,24 @@ class BMDao {
         let entity1 = NSEntityDescription.entityForName("Folder", inManagedObjectContext: managedObjectContext)
         fetchRequest1.entity = entity1
 
-        let pred1 = NSPredicate(format: "(folder_label = 'Bookmarks')", argumentArray: nil)
-        fetchRequest1.predicate = pred1
+        
+        let sortDescriptor = NSSortDescriptor(key: "lastaccessed", ascending: false)
+        fetchRequest1.sortDescriptors = [sortDescriptor]
+        
+        //let pred1 = NSPredicate(format: "(folder_label = 'Bookmarks')", argumentArray: nil)
+        //fetchRequest1.predicate = pred1
         
         var error: NSError?
         
         var objects = managedObjectContext.executeFetchRequest(fetchRequest1,
-            error: &error) as [Folder]
+            error: &error) as! [Folder]
         
         if objects.count == 0 {
             
             fldr = NSEntityDescription.insertNewObjectForEntityForName("Folder", inManagedObjectContext: managedObjectContext) as? Folder
             fldr?.created_date = NSDate()
             fldr?.folder_label = "Bookmarks"
+            fldr?.lastaccessed = NSDate()
             fldr?.orderfield = NSDate().timeIntervalSinceReferenceDate
             var error: NSError?
             
@@ -101,7 +106,7 @@ class BMDao {
             }else{
                 
                 
-                println("success")
+                //("success")
                 
                 let fetchRequest = NSFetchRequest()
                 // Edit the entity name as appropriate.
@@ -114,7 +119,7 @@ class BMDao {
                 var error: NSError?
                 
                 var objects = managedObjectContext.executeFetchRequest(fetchRequest,
-                    error: &error) as [Folder]
+                    error: &error) as! [Folder]
                 if objects.count > 0 {
                     
                     fldr = objects[0]
@@ -124,7 +129,7 @@ class BMDao {
             
             
         }else{
-            println("exist")
+            //("exist")
             fldr = objects[0]
             
         }

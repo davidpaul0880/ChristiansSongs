@@ -86,7 +86,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     func reFetchData(searchText : String, Scope selectedScope : Int){
         
         
-        println("searchText =\(searchText)")
+        //("searchText =\(searchText)")
         
         let fetchRequest = self.fetchedResultsController.fetchRequest
         
@@ -107,6 +107,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             //println("Unresolved error \(error), \(error.userInfo)")
             abort()
         }
+        self.tableView.reloadData()
         
     }
     func delayed(delay: Double, name: String, closure: Closure){
@@ -116,7 +117,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
             if let clor = self.closures[name] {
         
-                println("inside")
                 clor()
                 
                 
@@ -134,7 +134,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         //self performSelector:@selector(sendInlineSearch:) withObject:searchBar afterDelay:1.0];
         //[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(sendInlineSearch:) object:searchBar];
-        println("jj")
+
         //self.cancelDelayed("search")
         //self.delayed(0.5, name: "search"){
             
@@ -161,6 +161,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             //println("Unresolved error \(error), \(error.userInfo)")
             abort()
         }
+        searchBar.resignFirstResponder()
+        self.tableView.reloadData()
     }
     
     //optional func searchBarSearchButtonClicked(searchBar: UISearchBar) // called when keyboard search button pressed
@@ -179,15 +181,30 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         selectedSongFromBM = nil;
         super.viewWillAppear(animated);
     }
-    /*override func viewWillDisappear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
         //self.navigationController!.toolbarHidden = true;
-    }*/
+        
+        let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+        if isPad {
+            
+            if self.detailViewController?.songObj == nil {
+                
+                self.detailViewController!.songObj = BMDao().getSelectedSong("34")
+                if self.detailViewController!.songObj != nil {
+                    self.detailViewController!.configureView()
+                }
+                
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         //self.navigationItem.leftBarButtonItem = self.editButtonItem()
-        let btn : UIButton = UIButton.buttonWithType(UIButtonType.InfoLight) as UIButton
+        let btn : UIButton = UIButton.buttonWithType(UIButtonType.InfoLight) as! UIButton
         btn.addTarget(self, action: Selector("infoClicked"), forControlEvents: UIControlEvents.TouchUpInside)
         
         //let infoButton = UIBarButtonItem(customView: btn)
@@ -198,7 +215,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         let titlee = language == LangType.Malyalam ? "ENG" : "MAL"
         let langbuttom = UIBarButtonItem(title: titlee, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("languageChanged:"))
-        langbuttom.possibleTitles = NSSet(array: ["ENG", "MAL"])
+        langbuttom.possibleTitles = NSSet(array: ["ENG", "MAL"]) as Set<NSObject>
         
         self.navigationItem.rightBarButtonItem = langbuttom
         
@@ -207,7 +224,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
         
-     
+        
+        
+        
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -240,25 +262,37 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         if segue.identifier == "showDetail" {
             
+            let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
             if selectedSongFromBM != nil {
                 
                 
-                let controller = (segue.destinationViewController as UINavigationController).topViewController as DetailViewController
+               
                 controller.language = self.language
                 controller.songObj = selectedSongFromBM
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-                controller.navigationItem.leftItemsSupplementBackButton = true
+                
                 
                 
             }
             else if let indexPath = self.tableView.indexPathForSelectedRow() {
                 
-                let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as Songs
-                let controller = (segue.destinationViewController as UINavigationController).topViewController as DetailViewController
+                let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Songs
+                
                 controller.language = self.language
                 controller.songObj = object
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-                controller.navigationItem.leftItemsSupplementBackButton = true
+                
+            }
+            
+            controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
+            controller.navigationItem.leftItemsSupplementBackButton = true
+            let orientation = UIApplication.sharedApplication().statusBarOrientation
+            
+            if orientation.isPortrait {
+                
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.hideMaster()
+                // Portrait
+            } else {
+                // Landscape
             }
         }
     }
@@ -272,19 +306,19 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let sectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
+        let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
         return sectionInfo.numberOfObjects
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
     }
 
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
         
-        let sectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
+        let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
         return sectionInfo.name!
     }
     override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
@@ -301,11 +335,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Return false if you do not want the specified item to be editable.
         return true
     }*/
-
+    /*
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let context = self.fetchedResultsController.managedObjectContext
-            context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject)
+            context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
                 
             var error: NSError? = nil
             if !context.save(&error) {
@@ -316,9 +350,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             }
         }
     }
-
+    */
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as Songs
+        let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Songs
         if language == LangType.Malyalam {
             cell.textLabel!.text = object.title_ml
         }else{
@@ -410,7 +444,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
         
-        println("end fetch");
+        //("end fetch");
     }
 
     /*

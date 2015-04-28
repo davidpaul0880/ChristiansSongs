@@ -28,7 +28,7 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
     @IBAction func saveBM(sender: UIBarButtonItem) {
         
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedObjectContext = appDelegate.managedObjectContextUserData!
         let entity1 = NSEntityDescription.entityForName("BookMarks", inManagedObjectContext: managedObjectContext)
         
@@ -47,14 +47,14 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
         if let err = error {
            println("\(error)")
         } else {
-           println("success")
+           //("success")
         }
         
         self.cancelBM(nil)
     }
     func updatedBM(){
         
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedObjectContext = appDelegate.managedObjectContextUserData!
 
         editingBookMark!.folder = self.folder
@@ -66,7 +66,7 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
         if let err = error {
             println("\(error)")
         } else {
-            println("success")
+            //("success")
         }
         
         self.cancelBM(nil)
@@ -113,7 +113,7 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
         if indexPath.section == 1 {
             ident = "FolderCell"
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier(ident, forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ident, forIndexPath: indexPath) as! UITableViewCell
         
         if indexPath.section == 0 {
             
@@ -181,7 +181,7 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
         // Pass the selected object to the new view controller.
         if segue.identifier == "SelectFolder" {
             
-            let controller = segue.destinationViewController  as FolderSelectionTableViewController
+            let controller = segue.destinationViewController  as! FolderSelectionTableViewController
             controller.delegate = self
             
             
@@ -191,6 +191,7 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
     func folderSelected(selectedFolder : Folder) {
         
         self.folder = selectedFolder
+        self.folder.lastaccessed = NSDate()
         self.tableView.reloadData()
     }
 

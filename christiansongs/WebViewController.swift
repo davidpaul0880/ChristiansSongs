@@ -20,6 +20,7 @@ class WebViewController: UIViewController {
         // Do any additional setup after loading the view.
         let infopath = NSBundle.mainBundle().pathForResource("about", ofType: "html")
         let req = NSURLRequest(URL: NSURL(fileURLWithPath : infopath!)!)
+        webViewInfo.scrollView.backgroundColor = UIColor.whiteColor()
         webViewInfo.loadRequest(req)
     }
 

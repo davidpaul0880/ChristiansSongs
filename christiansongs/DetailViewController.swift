@@ -46,7 +46,9 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 
     @IBAction func fontPlusClicked(sender: UIBarButtonItem) {
        
-        var docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as String
+        self.webViewSong.stringByEvaluatingJavaScriptFromString("resizeText(1)")
+
+        /*var docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as! String
         docpath = docpath.stringByAppendingPathComponent("style.css")
         
         var filecontent = String(contentsOfFile: docpath, encoding: NSUTF8StringEncoding, error: nil)
@@ -86,13 +88,16 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
                 
             }
 
-        }
+        }*/ 
         //webViewSong.reload()
 
     }
     @IBAction func fontMinusClicked(sender: UIBarButtonItem) {
         
-        var docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as String
+        self.webViewSong.stringByEvaluatingJavaScriptFromString("resizeText(-1)")
+
+        
+       /* var docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as! String
         docpath = docpath.stringByAppendingPathComponent("style.css")
         
         var filecontent = String(contentsOfFile: docpath, encoding: NSUTF8StringEncoding, error: nil)
@@ -133,7 +138,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
                 
             }
             
-        }
+        }*/
         //webViewSong.reload()
     }
     @IBAction func settingsClicked(sender: UIBarButtonItem) {
@@ -143,7 +148,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
     @IBAction func actionButtonClicked(sender : UIBarButtonItem){
     
         //let actionsht = UIActionSheet(title: "Christian Songs", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Bookmark", "Email")
-        var actionSheet =  UIAlertController(title: "Christian Songs", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        var actionSheet =  UIAlertController(title: "ആത്മീയ ഗീതങ്ങൾ", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         //Create and add the Cancel action
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
@@ -151,7 +156,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
         }
         actionSheet.addAction(cancelAction)
         //Create and add first option action
-        let takePictureAction: UIAlertAction = UIAlertAction(title: "Bookmark", style: .Default) { action -> Void in
+        let takePictureAction: UIAlertAction = UIAlertAction(title: "Bookmark this song", style: .Default) { action -> Void in
             //Code for launching the camera goes here
             self.performSegueWithIdentifier("presentBMAdd", sender: self)
         }
@@ -174,10 +179,10 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
     func configureView() {
         
         // Update the user interface for the detail item.
-        //println("songObj!.filename_ml = \(songObj!.filename_ml)!")
+        //("songObj!.filename_ml = \(songObj!.filename_ml)!")
         
         
-        //println("songpath = \(songpath)!")
+        //("songFilePath = \(songFilePath)!")
         
         
         
@@ -186,12 +191,18 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
         
         
         let songpath = NSBundle.mainBundle().pathForResource(songFilePath, ofType: "")
+        
+        let req = NSURLRequest(URL: NSURL(fileURLWithPath : songpath!)!)
+        webViewSong.loadRequest(req)
+        
+        /*
         let text2 = String(contentsOfFile: songpath!, encoding: NSUTF8StringEncoding, error: nil)
         
-        let docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as String
+        let docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as! String
         isLoading = true
         webViewSong.delegate = self
         webViewSong.loadHTMLString(text2, baseURL: NSURL(fileURLWithPath : docpath))
+        */
         
         
     }
@@ -220,7 +231,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
         
         if segue.identifier == "presentBMAdd" {
             
-            let controller = (segue.destinationViewController as UINavigationController).topViewController as BMAddTableViewController
+            let controller = (segue.destinationViewController as! UINavigationController).topViewController as! BMAddTableViewController
             
            
             var newBMTemp =  Dictionary<String, String>()
@@ -239,10 +250,22 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
     }
     func webViewDidFinishLoad(webView: UIWebView){
         
-        if isLoading == true {
+        
+        let jsFilePath = NSBundle.mainBundle().pathForResource("script", ofType:"js")
+        let javascriptCode = String(contentsOfFile: jsFilePath!, encoding: NSUTF8StringEncoding, error: nil)
+        self.webViewSong.stringByEvaluatingJavaScriptFromString(javascriptCode!)
+        
+        
+        
+        let jsFilePath1 = NSBundle.mainBundle().pathForResource("style", ofType:"css")
+        let javascriptCode1 = String(contentsOfFile: jsFilePath1!, encoding: NSUTF8StringEncoding, error: nil)
+        self.webViewSong.stringByEvaluatingJavaScriptFromString(javascriptCode1!)
+
+        
+        /*if isLoading == true {
             
             
-            var docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as String
+            var docpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask , true)[0] as! String
             docpath = docpath.stringByAppendingPathComponent("style.css")
             
             var filecontent = String(contentsOfFile: docpath, encoding: NSUTF8StringEncoding, error: nil)
@@ -272,7 +295,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
                 }
                 
             }
-        }
+        }*/
     }
     func webView(webView: UIWebView, didFailLoadWithError error: NSError){
         

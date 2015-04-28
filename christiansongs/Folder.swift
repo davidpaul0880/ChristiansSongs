@@ -15,5 +15,6 @@ class Folder: NSManagedObject {
     @NSManaged var folder_label: String
     @NSManaged var orderfield: NSNumber
     @NSManaged var bookmarks: NSSet
+    @NSManaged var lastaccessed: NSDate
 
 }
