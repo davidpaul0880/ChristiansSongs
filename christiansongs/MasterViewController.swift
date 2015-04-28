@@ -85,14 +85,24 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     func reFetchData(searchText : String, Scope selectedScope : Int){
         
+        var tfield = titleField
+
+        let range1 = searchText.rangeOfCharacterFromSet(NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"))
+        if range1?.startIndex >= searchText.startIndex {
+            
+            
+            tfield = "title_en"
+        }
+        
         
         //("searchText =\(searchText)")
         
         let fetchRequest = self.fetchedResultsController.fetchRequest
         
         
+        
         //if selectedScope == 0 {
-        let predicate = NSPredicate(format: "(\(titleField) BEGINSWITH[c] %@)", argumentArray: [searchText])
+        let predicate = NSPredicate(format: "(\(tfield) BEGINSWITH[c] %@)", argumentArray: [searchText])
         fetchRequest.predicate = predicate
         
         /*}else{
@@ -149,6 +159,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }*/
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         
+        searchBar.text = nil
         let fetchRequest = self.fetchedResultsController.fetchRequest
         
         
