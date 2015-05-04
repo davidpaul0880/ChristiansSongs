@@ -30,8 +30,10 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
     var songFilePath : String {
         
         if language == MasterViewController.LangType.Malyalam {
+            //("file = \(songObj!.filename_ml)")
             return songObj!.filename_ml
         }else{
+            //("file = \(songObj!.filename_en)")
             return songObj!.filename_en
         }
     }
