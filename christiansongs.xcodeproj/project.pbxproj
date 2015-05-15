@@ -5424,7 +5424,7 @@
 		03B4334F1AAF28C400763599 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		03B433511AAF3D1C00763599 /* BMTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMTableViewController.swift; sourceTree = "<group>"; };
 		03B6469B1AAE07760018D735 /* MyNSFetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNSFetchedResultsController.swift; sourceTree = "<group>"; };
-		03C5A80D1AAD74C800772577 /* christiansongs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = christiansongs.app; path = ag.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03C5A80D1AAD74C800772577 /* ag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C5A8111AAD74C800772577 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03C5A8121AAD74C800772577 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03C5A8151AAD74C800772577 /* christiansongs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = christiansongs.xcdatamodel; sourceTree = "<group>"; };
@@ -8194,7 +8194,7 @@
 		03C5A80E1AAD74C800772577 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				03C5A80D1AAD74C800772577 /* christiansongs.app */,
+				03C5A80D1AAD74C800772577 /* ag.app */,
 				03C5A8271AAD74C900772577 /* christiansongsTests.xctest */,
 			);
 			name = Products;
@@ -8308,7 +8308,7 @@
 			);
 			name = christiansongs;
 			productName = christiansongs;
-			productReference = 03C5A80D1AAD74C800772577 /* christiansongs.app */;
+			productReference = 03C5A80D1AAD74C800772577 /* ag.app */;
 			productType = "com.apple.product-type.application";
 		};
 		03C5A8261AAD74C900772577 /* christiansongsTests */ = {
