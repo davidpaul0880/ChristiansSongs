@@ -102,7 +102,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }*/
         
         var error: NSError? = nil
-        if !_fetchedResultsController!.performFetch(&error) {
+        do {
+            try _fetchedResultsController!.performFetch()
+        } catch let error1 as NSError {
+            error = error1
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             //println("Unresolved error \(error), \(error.userInfo)")
@@ -157,7 +160,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         fetchRequest.predicate = nil
         
         var error: NSError? = nil
-        if !_fetchedResultsController!.performFetch(&error) {
+        do {
+            try _fetchedResultsController!.performFetch()
+        } catch let error1 as NSError {
+            error = error1
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             //println("Unresolved error \(error), \(error.userInfo)")
@@ -206,7 +212,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         //self.navigationItem.leftBarButtonItem = self.editButtonItem()
-        let btn : UIButton = UIButton.buttonWithType(UIButtonType.InfoLight) as! UIButton
+        let btn : UIButton = UIButton(type: UIButtonType.InfoLight)
         btn.addTarget(self, action: Selector("infoClicked"), forControlEvents: UIControlEvents.TouchUpInside)
         
         //let infoButton = UIBarButtonItem(customView: btn)
@@ -217,12 +223,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         let titlee = language == LangType.Malyalam ? "ENG" : "MAL"
         let langbuttom = UIBarButtonItem(title: titlee, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("languageChanged:"))
-        langbuttom.possibleTitles = NSSet(array: ["ENG", "MAL"]) as Set<NSObject>
+        langbuttom.possibleTitles = (NSSet(array: ["ENG", "MAL"]) as! Set<String>)
         
         self.navigationItem.rightBarButtonItem = langbuttom
         
         if let split = self.splitViewController {
-            let controllers = split.viewControllers
+            let controllers:[UINavigationController] = split.viewControllers as! [UINavigationController]
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
         
@@ -275,7 +281,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 
                 
             }
-            else if let indexPath = self.tableView.indexPathForSelectedRow() {
+            else if let indexPath = self.tableView.indexPathForSelectedRow {
                 
                 let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Songs
                 
@@ -308,26 +314,26 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
+        let sectionInfo = self.fetchedResultsController.sections![section] 
         return sectionInfo.numberOfObjects
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
     }
 
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String {
         
-        let sectionInfo = self.fetchedResultsController.sections![section] as! NSFetchedResultsSectionInfo
-        return sectionInfo.name!
+        let sectionInfo = self.fetchedResultsController.sections![section] 
+        return sectionInfo.name
     }
     override func tableView(tableView: UITableView, sectionForSectionIndexTitle title: String, atIndex index: Int) -> Int {
         
         return self.fetchedResultsController.sectionForSectionIndexTitle(title, atIndex: index)
     }
-    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [AnyObject]! {
+    override func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
         
         return self.fetchedResultsController.sectionIndexTitles
     }
@@ -401,7 +407,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         _fetchedResultsController = aFetchedResultsController
         
     	var error: NSError? = nil
-    	if !_fetchedResultsController!.performFetch(&error) {
+    	do {
+            try _fetchedResultsController!.performFetch()
+        } catch let error1 as NSError {
+            error = error1
     	     // Replace this implementation with code to handle the error appropriately.
     	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
              //println("Unresolved error \(error), \(error.userInfo)")
@@ -426,8 +435,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 return
         }
     }
-
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?){
         switch type {
             case .Insert:
                 tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)

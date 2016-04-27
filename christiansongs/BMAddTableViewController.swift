@@ -32,7 +32,7 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
         let managedObjectContext = appDelegate.managedObjectContextUserData!
         let entity1 = NSEntityDescription.entityForName("BookMarks", inManagedObjectContext: managedObjectContext)
         
-        var newBMTemp = BookMarks(entity: entity1!, insertIntoManagedObjectContext: managedObjectContext)
+        let newBMTemp = BookMarks(entity: entity1!, insertIntoManagedObjectContext: managedObjectContext)
 
                //managedObjectContext.insertObject(newBM!)
         newBMTemp.createddate = NSDate()
@@ -42,10 +42,14 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
         
         var error: NSError?
         
-        managedObjectContext.save(&error)
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
         
         if let err = error {
-           println("\(error)")
+           print("\(error)")
         } else {
            //("success")
         }
@@ -61,10 +65,14 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
         
         var error: NSError?
         
-        managedObjectContext.save(&error)
+        do {
+            try managedObjectContext.save()
+        } catch let error1 as NSError {
+            error = error1
+        }
         
         if let err = error {
-            println("\(error)")
+            print("\(error)")
         } else {
             //("success")
         }
@@ -113,7 +121,7 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
         if indexPath.section == 1 {
             ident = "FolderCell"
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier(ident, forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ident, forIndexPath: indexPath) 
         
         if indexPath.section == 0 {
             

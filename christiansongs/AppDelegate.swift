@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Override point for customization after application launch.
         let splitViewController = self.window!.rootViewController as! UISplitViewController
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
-        navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
+        navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
         splitViewController.delegate = self
 
         let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
@@ -107,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     // MARK: - Split view
 
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController!, ontoPrimaryViewController primaryViewController:UIViewController!) -> Bool {
+    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController, ontoPrimaryViewController primaryViewController:UIViewController) -> Bool {
         if let secondaryAsNavController = secondaryViewController as? UINavigationController {
             if let topAsDetailController = secondaryAsNavController.topViewController as? DetailViewController {
                 if topAsDetailController.songObj == nil {
@@ -124,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.jeesmon.apps.christiansongs" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] 
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -158,7 +158,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         if (!NSFileManager.defaultManager().fileExistsAtPath(url.path!)) {
             let defaultStorePath = NSBundle.mainBundle().pathForResource("songscore", ofType:"sqlite")
             
-            NSFileManager.defaultManager().copyItemAtPath(defaultStorePath!, toPath:url.path!, error: nil)
+            do {
+                try NSFileManager.defaultManager().copyItemAtPath(defaultStorePath!, toPath:url.path!)
+            } catch _ {
+            }
         }
         
         
@@ -169,27 +172,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         //var optionjournal = NSMutableDictionary()
         //optionjournal["journal_mode"] = "DELETE"
         
-        var options = NSMutableDictionary()
+        var options:[NSObject:AnyObject] = [NSObject:AnyObject]()
         options[NSMigratePersistentStoresAutomaticallyOption] = "YES"
         options[NSInferMappingModelAutomaticallyOption] = "YES"
 
         //options[NSReadOnlyPersistentStoreOption] = "YES"
         //options[NSSQLitePragmasOption] = optionjournal
+
         
-        
-        
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options as [NSObject : AnyObject], error: &error) == nil {
+
+        do {
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
+            
+        } catch var error1 as NSError {
+            error = error1
             coordinator = nil
             // Report any error we got.
-            let dict = NSMutableDictionary()
+    
+            var dict:[NSObject:AnyObject] = [NSObject:AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             dict[NSUnderlyingErrorKey] = error
-            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict as [NSObject : AnyObject])
+            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
             abort()
+        } catch {
+            fatalError()
         }
         
         
@@ -205,18 +215,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
         
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        do {
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+        } catch var error1 as NSError {
+            error = error1
             coordinator = nil
             // Report any error we got.
-            let dict = NSMutableDictionary()
+            var dict:[NSObject:AnyObject] = [NSObject:AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             dict[NSUnderlyingErrorKey] = error
-            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict as [NSObject : AnyObject])
+            error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
             abort()
+        } catch {
+            fatalError()
         }
         
         
@@ -250,11 +265,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func saveContext () {
         if let moc = self.managedObjectContextUserData {
             var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if moc.hasChanges {
+                do {
+                    try moc.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }

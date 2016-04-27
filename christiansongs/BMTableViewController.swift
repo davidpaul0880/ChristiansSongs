@@ -39,7 +39,13 @@ class BMTableViewController: UITableViewController {
             
             var error: NSError?
             
-            var objects = managedObjectContext.executeFetchRequest(fetchRequest, error: &error)
+            var objects: [AnyObject]?
+            do {
+                objects = try managedObjectContext.executeFetchRequest(fetchRequest)
+            } catch let error1 as NSError {
+                error = error1
+                objects = nil
+            }
             
             if let results = objects {
                 
@@ -51,7 +57,7 @@ class BMTableViewController: UITableViewController {
                         let sett : NSSet = foldert.bookmarks
                         if sett.count > 0 {
                             
-                            var allchilds : NSArray = sett.allObjects
+                            let allchilds : NSArray = sett.allObjects
                             let sortDescriptorchild = NSSortDescriptor(key: "orderfield", ascending: true)
                             arrayBookmarks = allchilds.sortedArrayUsingDescriptors([sortDescriptorchild]) as! [BookMarks]
                             
@@ -70,7 +76,7 @@ class BMTableViewController: UITableViewController {
         }else{
             
             
-            var allchilds : NSArray = parentFolder!.bookmarks.allObjects
+            let allchilds : NSArray = parentFolder!.bookmarks.allObjects
             let sortDescriptorchild = NSSortDescriptor(key: "orderfield", ascending: true)
             arrayBookmarks = allchilds.sortedArrayUsingDescriptors([sortDescriptorchild]) as! [BookMarks]
             
@@ -111,10 +117,14 @@ class BMTableViewController: UITableViewController {
             let managedObjectContext = appDelegate.managedObjectContextUserData!
             
             var error: NSError?
-            managedObjectContext.save(&error)
+            do {
+                try managedObjectContext.save()
+            } catch let error1 as NSError {
+                error = error1
+            }
             
             if let err = error {
-                println("\(error)")
+                print("\(error)")
             } else {
                 //("success")
             }
@@ -199,9 +209,9 @@ class BMTableViewController: UITableViewController {
             }else{
                 
                 
-                var storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                 
-                var controler : BMAddTableViewController = storyboard.instantiateViewControllerWithIdentifier("addeditcontroller") as! BMAddTableViewController
+                let controler : BMAddTableViewController = storyboard.instantiateViewControllerWithIdentifier("addeditcontroller") as! BMAddTableViewController
                 
                 controler.editingBookMark = arrayBookmarks[indexPath.row]
                 controler.folder = arrayBookmarks[indexPath.row].folder as! Folder
@@ -227,7 +237,7 @@ class BMTableViewController: UITableViewController {
             ident = "NewFolder"
         }
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(ident, forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(ident, forIndexPath: indexPath) 
 
         if indexPath.section == 0 {
             
@@ -322,14 +332,14 @@ class BMTableViewController: UITableViewController {
                 //Code for launching the camera goes here
                 
                 
-                let loginTextField = actionSheet.textFields![0] as! UITextField
+                let loginTextField = actionSheet.textFields![0] 
                 
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 let managedObjectContext = appDelegate.managedObjectContextUserData!
                 var fldr = NSEntityDescription.insertNewObjectForEntityForName("Folder", inManagedObjectContext: managedObjectContext) as? Folder
                 fldr?.lastaccessed = NSDate()
                 fldr?.created_date = NSDate()
-                fldr?.folder_label = loginTextField.text
+                fldr?.folder_label = loginTextField.text!
                 fldr?.orderfield = NSDate.timeIntervalSinceReferenceDate()
                 
                 
@@ -515,7 +525,7 @@ class BMTableViewController: UITableViewController {
     
     
     // MARK: - Segues
-    override func shouldPerformSegueWithIdentifier(identifier: String!, sender: AnyObject!) -> Bool {
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject!) -> Bool {
         
         if identifier == "showChildBookmarks" { // you define it in the storyboard (click on the segue, then Attributes' inspector > Identifier
             
@@ -555,7 +565,7 @@ class BMTableViewController: UITableViewController {
         else*/
         if segue.identifier == "showChildBookmarks" {
             
-            if let indexPath = self.tableView.indexPathForSelectedRow() {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
                 
                 let controller = segue.destinationViewController as! BMTableViewController
                 

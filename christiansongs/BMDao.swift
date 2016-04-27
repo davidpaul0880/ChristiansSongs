@@ -29,8 +29,7 @@ class BMDao {
         
         var error: NSError?
         
-        var objects = managedObjectContext.executeFetchRequest(fetchRequest1,
-            error: &error) as! [Folder]
+        let objects = (try! managedObjectContext.executeFetchRequest(fetchRequest1)) as! [Folder]
         
         return objects
     }
@@ -51,8 +50,7 @@ class BMDao {
         
         var error: NSError?
         
-        var objects = managedObjectContext.executeFetchRequest(fetchRequest1,
-            error: &error) as! [Songs]
+        var objects = (try! managedObjectContext.executeFetchRequest(fetchRequest1)) as! [Songs]
         
         if objects.count > 0 {
             
@@ -87,8 +85,7 @@ class BMDao {
         
         var error: NSError?
         
-        var objects = managedObjectContext.executeFetchRequest(fetchRequest1,
-            error: &error) as! [Folder]
+        var objects = (try! managedObjectContext.executeFetchRequest(fetchRequest1)) as! [Folder]
         
         if objects.count == 0 {
             
@@ -99,10 +96,14 @@ class BMDao {
             fldr?.orderfield = NSDate().timeIntervalSinceReferenceDate
             var error: NSError?
             
-            managedObjectContext.save(&error)
+            do {
+                try managedObjectContext.save()
+            } catch let error1 as NSError {
+                error = error1
+            }
             
             if let err = error {
-                println("\(error)")
+                print("\(error)")
             }else{
                 
                 
@@ -118,8 +119,7 @@ class BMDao {
                 
                 var error: NSError?
                 
-                var objects = managedObjectContext.executeFetchRequest(fetchRequest,
-                    error: &error) as! [Folder]
+                var objects = (try! managedObjectContext.executeFetchRequest(fetchRequest)) as! [Folder]
                 if objects.count > 0 {
                     
                     fldr = objects[0]

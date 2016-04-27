@@ -12,7 +12,7 @@ import CoreData
 class MyNSFetchedResultsController : NSFetchedResultsController {
     
     
-    override func sectionIndexTitleForSectionName(sectionName: String?) -> String? {
+    override func sectionIndexTitleForSectionName(sectionName: String) -> String? {
         
         return sectionName;
     }

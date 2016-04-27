@@ -8335,7 +8335,9 @@
 		03C5A8051AAD74C800772577 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftMigration = 0720;
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = jeesmon;
 				TargetAttributes = {
 					03C5A80C1AAD74C800772577 = {
@@ -11159,6 +11161,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -11226,6 +11229,7 @@
 				INFOPLIST_FILE = christiansongs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeesmon.apps.ag;
 				PRODUCT_NAME = ag;
 			};
 			name = Debug;
@@ -11239,6 +11243,7 @@
 				INFOPLIST_FILE = christiansongs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeesmon.apps.ag;
 				PRODUCT_NAME = ag;
 				PROVISIONING_PROFILE = "c73664b4-8c22-430d-99c5-1358e8dea277";
 			};
@@ -11258,6 +11263,7 @@
 				);
 				INFOPLIST_FILE = christiansongsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jeesmon.apps.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/christiansongs.app/christiansongs";
 			};
@@ -11273,6 +11279,7 @@
 				);
 				INFOPLIST_FILE = christiansongsTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jeesmon.apps.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/christiansongs.app/christiansongs";
 			};

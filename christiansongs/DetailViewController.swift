@@ -150,7 +150,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
     @IBAction func actionButtonClicked(sender : UIBarButtonItem){
     
         //let actionsht = UIActionSheet(title: "Christian Songs", delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Bookmark", "Email")
-        var actionSheet =  UIAlertController(title: "ആത്മീയ ഗീതങ്ങൾ", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let actionSheet =  UIAlertController(title: "ആത്മീയ ഗീതങ്ങൾ", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         //Create and add the Cancel action
         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
@@ -194,7 +194,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
         
         let songpath = NSBundle.mainBundle().pathForResource(songFilePath, ofType: "")
         
-        let req = NSURLRequest(URL: NSURL(fileURLWithPath : songpath!)!)
+        let req = NSURLRequest(URL: NSURL(fileURLWithPath : songpath!))
         webViewSong.loadRequest(req)
         
         /*
@@ -254,13 +254,13 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
         
         
         let jsFilePath = NSBundle.mainBundle().pathForResource("script", ofType:"js")
-        let javascriptCode = String(contentsOfFile: jsFilePath!, encoding: NSUTF8StringEncoding, error: nil)
+        let javascriptCode = try? String(contentsOfFile: jsFilePath!, encoding: NSUTF8StringEncoding)
         self.webViewSong.stringByEvaluatingJavaScriptFromString(javascriptCode!)
         
         
         
         let jsFilePath1 = NSBundle.mainBundle().pathForResource("style", ofType:"css")
-        let javascriptCode1 = String(contentsOfFile: jsFilePath1!, encoding: NSUTF8StringEncoding, error: nil)
+        let javascriptCode1 = try? String(contentsOfFile: jsFilePath1!, encoding: NSUTF8StringEncoding)
         self.webViewSong.stringByEvaluatingJavaScriptFromString(javascriptCode1!)
 
         
@@ -299,7 +299,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
             }
         }*/
     }
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError){
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?){
         
     }
 
