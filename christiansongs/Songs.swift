@@ -13,7 +13,7 @@ class Songs: NSManagedObject {
 
     @NSManaged var filename_en: String
     @NSManaged var filename_ml: String
-    @NSManaged var songs_id: String
+    @NSManaged var song_id: NSNumber
     @NSManaged var title_en: String
     @NSManaged var title_ml: String
     

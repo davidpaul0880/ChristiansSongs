@@ -236,10 +236,10 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
             let controller = (segue.destinationViewController as! UINavigationController).topViewController as! BMAddTableViewController
             
            
-            var newBMTemp =  Dictionary<String, String>()
+            var newBMTemp =  Dictionary<String, AnyObject>()
             
             newBMTemp["songtitle"] = songTitle
-            newBMTemp["songs_id"] = songObj!.songs_id
+            newBMTemp["song_id"] = songObj!.song_id
             
             controller.folder = BMDao().getDefaultFolder()
             controller.newBM = newBMTemp

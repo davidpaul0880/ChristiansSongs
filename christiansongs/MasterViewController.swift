@@ -199,7 +199,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             
             if self.detailViewController?.songObj == nil {
                 
-                self.detailViewController!.songObj = BMDao().getSelectedSong("34")
+                self.detailViewController!.songObj = BMDao().getSelectedSong((34))
                 if self.detailViewController!.songObj != nil {
                     self.detailViewController!.configureView()
                 }

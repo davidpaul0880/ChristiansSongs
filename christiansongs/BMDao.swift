@@ -34,7 +34,7 @@ class BMDao {
         return objects
     }
     
-    func getSelectedSong(songId : String) -> Songs? {
+    func getSelectedSong(songId : NSNumber) -> Songs? {
         
         //("songId = \(songId)")
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -45,7 +45,7 @@ class BMDao {
         let entity1 = NSEntityDescription.entityForName("Songs", inManagedObjectContext: managedObjectContext)
         fetchRequest1.entity = entity1
         
-        let pred1 = NSPredicate(format: "(songs_id = %@)", argumentArray: [songId])
+        let pred1 = NSPredicate(format: "(song_id = %@)", argumentArray: [songId])
         fetchRequest1.predicate = pred1
         
         var error: NSError?

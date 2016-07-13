@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F27" minimumToolsVersion="Xcode 4.3">
     <entity name="BookMarks" representedClassName="ag.BookMarks" syncable="YES">
         <attribute name="bmdescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createddate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastaccesseddate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="orderfield" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="songs_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="song_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="songtitle" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Folder" inverseName="bookmarks" inverseEntity="Folder" syncable="YES"/>
     </entity>

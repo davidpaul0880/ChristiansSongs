@@ -203,7 +203,7 @@ class BMTableViewController: UITableViewController {
             if self.tableView.editing == false {
                 
                 let controller = self.navigationController?.viewControllers[0] as! MasterViewController
-                controller.selectedSongFromBM = BMDao().getSelectedSong(arrayBookmarks[indexPath.row].songs_id)
+                controller.selectedSongFromBM = BMDao().getSelectedSong(arrayBookmarks[indexPath.row].song_id)
                 
                 controller.performSegueWithIdentifier("showDetail", sender: self)
             }else{

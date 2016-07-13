@@ -154,13 +154,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("songscore.sqlite")
         
+        do {
+            try NSFileManager.defaultManager().removeItemAtPath(url.path!)
+        } catch let error as NSError {
+            print(error.debugDescription)
+        }
+        
         //this part
         if (!NSFileManager.defaultManager().fileExistsAtPath(url.path!)) {
             let defaultStorePath = NSBundle.mainBundle().pathForResource("songscore", ofType:"sqlite")
             
+            
             do {
+                print("copy ing")
                 try NSFileManager.defaultManager().copyItemAtPath(defaultStorePath!, toPath:url.path!)
-            } catch _ {
+
+            } catch let error as NSError {
+                print("copy error \(error.debugDescription)")
             }
         }
         
@@ -182,7 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         
 
         do {
-            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options)
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
             
         } catch var error1 as NSError {
             error = error1
@@ -196,7 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             error = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog("Unresolved error \(error), \(error!.userInfo)")
+            print("Unresolved error \(error), \(error!.userInfo)")
             abort()
         } catch {
             fatalError()

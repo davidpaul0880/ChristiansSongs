@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F27" minimumToolsVersion="Automatic">
     <entity name="Songs" representedClassName="ag.Songs" syncable="YES">
         <attribute name="filename_en" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="filename_ml" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="songs_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="song_id" optional="YES" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="title_en" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title_ml" optional="YES" attributeType="String" syncable="YES"/>
     </entity>

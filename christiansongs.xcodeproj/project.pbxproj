@@ -11783,13 +11783,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: John Carini (97HKSGE29L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jeesmon Jacob (28LDT98ZTB)";
 				INFOPLIST_FILE = christiansongs/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesmon.apps.ag;
 				PRODUCT_NAME = ag;
-				PROVISIONING_PROFILE = "c73664b4-8c22-430d-99c5-1358e8dea277";
+				PROVISIONING_PROFILE = "519a7fbc-22ad-4794-83f5-c4693d5c6685";
 			};
 			name = Release;
 		};

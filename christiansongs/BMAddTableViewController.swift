@@ -11,7 +11,7 @@ import CoreData
 
 class BMAddTableViewController: UITableViewController , FolderSelection{
     
-    var newBM : Dictionary<String, String>?
+    var newBM : Dictionary<String, AnyObject>?
     var folder : Folder!
     var editingBookMark : BookMarks?
 
@@ -37,8 +37,8 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
                //managedObjectContext.insertObject(newBM!)
         newBMTemp.createddate = NSDate()
         newBMTemp.folder = self.folder!
-        newBMTemp.songtitle = newBM!["songtitle"]!
-        newBMTemp.songs_id = newBM!["songs_id"]!
+        newBMTemp.songtitle = newBM!["songtitle"]! as! String
+        newBMTemp.song_id = newBM!["song_id"]! as! NSNumber
         
         var error: NSError?
         
@@ -71,7 +71,7 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
             error = error1
         }
         
-        if let err = error {
+        if let _ = error {
             print("\(error)")
         } else {
             //("success")
@@ -129,7 +129,7 @@ class BMAddTableViewController: UITableViewController , FolderSelection{
                 cell.textLabel?.text = editingBookMark!.songtitle
                 
             }else{
-                cell.textLabel?.text = newBM!["songtitle"]
+                cell.textLabel?.text = newBM!["songtitle"] as? String
             }
             
             

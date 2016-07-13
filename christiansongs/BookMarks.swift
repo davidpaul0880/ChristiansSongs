@@ -15,7 +15,7 @@ class BookMarks: NSManagedObject {
     @NSManaged var createddate: NSDate
     @NSManaged var lastaccesseddate: NSDate
     @NSManaged var orderfield: NSNumber
-    @NSManaged var songs_id: String
+    @NSManaged var song_id: NSNumber
     @NSManaged var songtitle: String
     @NSManaged var language: String
     @NSManaged var folder: NSManagedObject
