@@ -36,6 +36,11 @@ extension NSManagedObject {
     }
     
 }
+enum LangType {
+    
+    case Malyalam
+    case Englisg
+}
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate {
 
@@ -47,11 +52,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     var selectedSongFromBM : Songs?
     //@IBOutlet weak var searchBar : UISearchBar!
     //@IBOutlet weak var searchDisplayController : UISearchDisplayController!
-    enum LangType {
-        
-        case Malyalam
-        case Englisg
-    }
+    
 
     var language : LangType = LangType.Malyalam
     var titleField : String {

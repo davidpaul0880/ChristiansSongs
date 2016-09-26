@@ -11775,6 +11775,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesmon.apps.ag;
 				PRODUCT_NAME = ag;
+				PROVISIONING_PROFILE = "b7da1c76-2a56-4068-8cbe-298ee887c112";
 			};
 			name = Debug;
 		};
@@ -11789,7 +11790,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jeesmon.apps.ag;
 				PRODUCT_NAME = ag;
-				PROVISIONING_PROFILE = "519a7fbc-22ad-4794-83f5-c4693d5c6685";
+				PROVISIONING_PROFILE = "b7da1c76-2a56-4068-8cbe-298ee887c112";
 			};
 			name = Release;
 		};

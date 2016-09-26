@@ -14,6 +14,7 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webViewSong: UIWebView!
     //var songObj : Songs!
     var isLoading : Bool = false
+    var langButton: UIBarButtonItem!
  
     var songObj: Songs? {
         
@@ -25,11 +26,11 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
-    var language : MasterViewController.LangType = MasterViewController.LangType.Malyalam
+    var language : LangType = LangType.Malyalam
     
     var songFilePath : String {
         
-        if language == MasterViewController.LangType.Malyalam {
+        if language == LangType.Malyalam {
             //("file = \(songObj!.filename_ml)")
             return songObj!.filename_ml
         }else{
@@ -39,12 +40,14 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
     }
     var songTitle : String {
         
-        if language == MasterViewController.LangType.Malyalam {
+        if language == LangType.Malyalam {
             return songObj!.title_ml
         }else{
             return songObj!.title_en
         }
     }
+    
+    //MARK:- IBAction
 
     @IBAction func fontPlusClicked(sender: UIBarButtonItem) {
        
@@ -146,6 +149,20 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
     @IBAction func settingsClicked(sender: UIBarButtonItem) {
         
     }
+    @IBAction func languageChanged(sender: UIBarButtonItem) {
+     
+        if language == .Malyalam {
+            langButton.title = "MAL"
+            language = .Englisg
+            configureView()
+        }
+        else {
+            langButton.title = "ENG"
+            language = .Malyalam
+            configureView()
+        }
+    }
+    
     
     @IBAction func actionButtonClicked(sender : UIBarButtonItem){
     
@@ -191,11 +208,23 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
         //let req = NSURLRequest(URL: NSURL(fileURLWithPath : songpath!)!)
         //webViewSong.loadRequest(req)
         
-        
+        if songObj != nil {
+            
+            
+            
+            
+            
+        }else{
+            songObj = BMDao().getSelectedSong((34))
+            
+        }
+        self.navigationItem.title = songTitle
         let songpath = NSBundle.mainBundle().pathForResource(songFilePath, ofType: "")
         
         let req = NSURLRequest(URL: NSURL(fileURLWithPath : songpath!))
         webViewSong.loadRequest(req)
+        
+        
         
         /*
         let text2 = String(contentsOfFile: songpath!, encoding: NSUTF8StringEncoding, error: nil)
@@ -211,15 +240,12 @@ class DetailViewController: UIViewController, UIWebViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let btntitle = self.language == LangType.Englisg ?  "MAL" : "ENG"
+        langButton = UIBarButtonItem(title: btntitle, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("languageChanged:"))
+        self.navigationItem.rightBarButtonItem = langButton
         // Do any additional setup after loading the view, typically from a nib.
-        if songObj != nil {
-            
-            self.configureView()
-            self.navigationItem.title = songTitle
-            
-        }else{
-            self.navigationItem.title = ""
-        }
+        self.configureView()
     }
     /*deinit {
         webViewSong = nil
